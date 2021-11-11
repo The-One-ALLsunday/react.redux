@@ -24,7 +24,7 @@ module.exports = override(
 		modifyVars:{
       // 'hack': `true;@import "${require.resolve('antd/lib/style/color/colorPalette.less')}";`,
       // ...darkThemeVars,
-      '@primary-color':'#f00',
+      // '@primary-color':'#f00',
     },
 		localIdentName: '[local]--[hash:base64:5]'
   })
