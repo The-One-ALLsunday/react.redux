@@ -13,7 +13,7 @@ import storeData from "@/store/reducers";
 
 const reducers = combineReducers({ storeData });
 
-const persistConfig = { key: "storeData", storage };
+const persistConfig = { key: "root", storage };
 
 const myPersistReducer = persistReducer(persistConfig, reducers);
 
