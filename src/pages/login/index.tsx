@@ -14,7 +14,7 @@ const Login: React.FC<IProps> = (props) => {
   return (
     <div>
       <div>{state}</div>
-      <Button onClick={() => setState(Math.random())}>按钮</Button>
+      <Button onClick={() => setState(Math.random())}>按钮ya</Button>
     </div>
   );
 };
