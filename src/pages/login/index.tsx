@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "antd";
 import * as actions from "@/store/actions";
 import { StoreState } from "@/store/state";
+import { RebaseI } from "@/pages/git-practice";
 
 interface IProps {
   storeData: StoreState;
@@ -15,6 +16,7 @@ const Login: React.FC<IProps> = (props) => {
     <div>
       <div>{state}</div>
       <Button onClick={() => setState(Math.random())}>按钮ya</Button>
+      <RebaseI />
     </div>
   );
 };
