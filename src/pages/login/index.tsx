@@ -13,6 +13,7 @@ const Login: React.FC<IProps> = (props) => {
   const [state, setState] = useState<number>(0);
 
   console.log(1);
+  console.log(2);
 
   return (
     <div>
