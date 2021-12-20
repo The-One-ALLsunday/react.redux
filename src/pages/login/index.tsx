@@ -12,6 +12,8 @@ interface IProps {
 const Login: React.FC<IProps> = (props) => {
   const [state, setState] = useState<number>(0);
 
+  console.log(1);
+
   return (
     <div>
       <div>{state}</div>
