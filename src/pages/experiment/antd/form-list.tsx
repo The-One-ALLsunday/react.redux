@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Space, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -7,6 +7,7 @@ const { Option } = Select;
 const areas = [
   { label: "Beijing", value: "Beijing" },
   { label: "Shanghai", value: "Shanghai" },
+  { label: "henan", value: "henan" },
 ];
 
 const sights = {
@@ -25,22 +26,26 @@ const FormList: React.FC = () => {
     form.setFieldsValue({ sights: [] });
   };
 
+  useEffect(() => {
+    form.setFields([
+      {
+        name: "area",
+        value: "henan",
+        touched: true,
+      },
+    ]);
+  }, [form]);
+
   return (
     <Form
       form={form}
       name="dynamic_form_nest_item"
       onFinish={onFinish}
       autoComplete="off"
-      initialValues={{
-        area: "Shanghai",
-        sights: [
-          { sight: "Oriental Pearl", price: 30 },
-          { sight: "The Bund", price: 30 },
-          { sight: "The Bund", price: 30 },
-          {},
-          { price: 30 },
-        ],
-      }}
+      // initialValues={{
+      //   area: "Shanghai",
+      //   sights: [],
+      // }}
     >
       <Form.Item
         name="area"
@@ -50,64 +55,67 @@ const FormList: React.FC = () => {
         <Select options={areas} onChange={handleChange} />
       </Form.Item>
       <Form.List name="sights">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map((field) => (
-              <Space key={field.key} align="baseline">
-                <Form.Item
-                  noStyle
-                  shouldUpdate={(prevValues, curValues) =>
-                    prevValues.area !== curValues.area ||
-                    prevValues.sights !== curValues.sights
-                  }
-                >
-                  {() => (
-                    <Form.Item
-                      {...field}
-                      label="Sight"
-                      name={[field.name, "sight"]}
-                      rules={[{ required: true, message: "Missing sight" }]}
-                    >
-                      <Select
-                        disabled={!form.getFieldValue("area")}
-                        style={{ width: 130 }}
+        {(fields, { add, remove }) => {
+          console.log(fields);
+          return (
+            <>
+              {fields.map((field) => (
+                <Space key={field.key} align="baseline">
+                  <Form.Item
+                    noStyle
+                    shouldUpdate={(prevValues, curValues) =>
+                      prevValues.area !== curValues.area ||
+                      prevValues.sights !== curValues.sights
+                    }
+                  >
+                    {() => (
+                      <Form.Item
+                        {...field}
+                        label="Sight"
+                        name={[field.name, "sight"]}
+                        rules={[{ required: true, message: "Missing sight" }]}
                       >
-                        {(sights[form.getFieldValue("area")] || []).map(
-                          (item) => (
-                            <Option key={item} value={item}>
-                              {item}
-                            </Option>
-                          )
-                        )}
-                      </Select>
-                    </Form.Item>
-                  )}
-                </Form.Item>
-                <Form.Item
-                  {...field}
-                  label="Price"
-                  name={[field.name, "price"]}
-                  rules={[{ required: true, message: "Missing price" }]}
+                        <Select
+                          disabled={!form.getFieldValue("area")}
+                          style={{ width: 130 }}
+                        >
+                          {(sights[form.getFieldValue("area")] || []).map(
+                            (item) => (
+                              <Option key={item} value={item}>
+                                {item}
+                              </Option>
+                            )
+                          )}
+                        </Select>
+                      </Form.Item>
+                    )}
+                  </Form.Item>
+                  <Form.Item
+                    {...field}
+                    label="Price"
+                    name={[field.name, "price"]}
+                    rules={[{ required: true, message: "Missing price" }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <MinusCircleOutlined onClick={() => remove(field.name)} />
+                </Space>
+              ))}
+
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  block
+                  icon={<PlusOutlined />}
                 >
-                  <Input />
-                </Form.Item>
-
-                <MinusCircleOutlined onClick={() => remove(field.name)} />
-              </Space>
-            ))}
-
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add sights
-              </Button>
-            </Form.Item>
-          </>
-        )}
+                  Add sights
+                </Button>
+              </Form.Item>
+            </>
+          );
+        }}
       </Form.List>
       <Form.Item>
         <Button type="primary" htmlType="submit">
