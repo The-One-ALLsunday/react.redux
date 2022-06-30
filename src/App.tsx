@@ -7,6 +7,7 @@ import { store, persistor } from "@/store";
 import Router from "@/routes";
 
 console.log("a");
+console.log("b");
 
 const App: React.FC = () => {
   return (
