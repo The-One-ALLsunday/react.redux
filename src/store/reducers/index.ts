@@ -7,6 +7,8 @@ interface StoreAction {
 }
 
 const storeData = (state = initState, { type, payload }: StoreAction) => {
+  console.log("state", state);
+
   if (!actionTypes[type]) return state;
   const { field } = actionTypes[type];
   return { ...state, [field]: payload };

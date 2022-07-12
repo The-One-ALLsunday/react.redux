@@ -18,7 +18,7 @@ const persistConfig = { key: "root", storage };
 const myPersistReducer = persistReducer(persistConfig, reducers);
 
 export const store: any = createStore(
-  myPersistReducer,
-  composeWithDevTools(applyMiddleware(logger, thunk))
+  myPersistReducer
+  // composeWithDevTools(applyMiddleware(logger, thunk))
 );
 export const persistor = persistStore(store);

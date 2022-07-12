@@ -3,6 +3,7 @@ export interface StoreState {
     userName: string;
     permission: string[];
     token: string;
+    role: string;
   };
   collapsed: boolean;
   curTab: string[];
@@ -15,6 +16,7 @@ const initState: StoreState = {
     userName: "",
     permission: [],
     token: "sfsdfsfds",
+    role: "admin",
   }, // 用户信息
   collapsed: false, // 菜单收纳状态
   curTab: [], // 当前tab页面

@@ -1,15 +1,16 @@
+import React, { useMemo } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "@/store/actions";
 import Login from "@/pages/login";
 import Layout from "@/layout";
 
-interface IProps {
-  token?: string;
-  role: string;
-  getUserInfo: (token: string) => Promise<string>;
-}
+interface IProps extends ReduxProps {}
 
-const Router: React.FC = (props) => {
-  const { token, role, getUserInfo } = props as IProps;
+const Router: React.FC<IProps> = (props) => {
+  console.log("props", props);
+  const { storeData } = props;
+  const userInfo = useMemo(() => storeData?.userInfo, [storeData]);
 
   return (
     <HashRouter>
@@ -18,14 +19,13 @@ const Router: React.FC = (props) => {
         <Route
           exact
           render={() => {
-            if (!token) {
+            if (!userInfo.token) {
               return <Redirect to="/login" />;
             } else {
-              if (role) {
+              if (userInfo.role) {
                 return <Layout />;
-              } else {
-                getUserInfo(token).then(() => <Layout />);
               }
+              // getUserInfo(token).then(() => <Layout />);
             }
           }}
         />
@@ -33,5 +33,4 @@ const Router: React.FC = (props) => {
     </HashRouter>
   );
 };
-
-export default Router;
+export default connect((state) => state, actions)(Router);
